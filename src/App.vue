@@ -1,28 +1,37 @@
 <template>
   <div id="app">
-    <img alt="Vue logo" src="./assets/logo.png">
-    <HelloWorld msg="Welcome to Your Vue.js App"/>
+    <Camera v-on:takePicture="getPicture" />
+    <Photo />
   </div>
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld.vue'
-
+import Camera from "./components/camera";
+import Photo from "./components/photo"
 export default {
-  name: 'App',
+  name: "App",
   components: {
-    HelloWorld
-  }
-}
+    Camera,
+    Photo
+  },
+  methods: {
+    getPicture() {
+      const picture = document.querySelector("canvas")
+
+      const ctx = picture.getContext("2d")
+      ctx.imageSmoothingEnabled = true
+      ctx.imageSmoothingQuality = "high"
+      ctx.drawImage(document.querySelector("video"), 0, 0, picture.width, picture.height)
+    },
+  },
+};
 </script>
 
-<style>
-#app {
+<style lang="scss">
+body {
   font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
+  padding: 0;
+  margin: 0;
+  border: 0;
 }
 </style>
